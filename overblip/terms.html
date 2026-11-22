@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overblip Terms of Service</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#FAF8F4;
+    --surface:#FFFFFF;
+    --border:#E6E1D8;
+    --text:#211F1C;
+    --muted:#6B6459;
+    --accent:#4C57D6;
+    --accent-soft:#EEF0FC;
+    --code-bg:#F1EEE6;
+    --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#15141A;
+      --surface:#1C1B22;
+      --border:#312F39;
+      --text:#EDEBF2;
+      --muted:#A6A2B0;
+      --accent:#9AA3F5;
+      --accent-soft:#23233A;
+      --code-bg:#211F29;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html, body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    padding-inline:20px;
+    padding-block:48px;
+  }
+  a{ color:var(--accent); text-decoration-thickness:1px; text-underline-offset:2px; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{
+    max-width:700px;
+    margin-inline:auto;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-body);
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:999px;
+    padding:5px 14px;
+    margin-bottom:22px;
+  }
+
+  h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2rem, 5vw, 2.6rem);
+    line-height:1.1;
+    margin:0 0 10px;
+    text-wrap:balance;
+  }
+
+  .meta{
+    color:var(--muted);
+    font-size:0.92rem;
+    margin:0 0 40px;
+  }
+  .meta strong{ color:var(--text); font-weight:600; }
+
+  .toc{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px 24px;
+    margin-bottom:44px;
+  }
+  .toc-title{
+    font-size:0.78rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+  .toc ol{
+    margin:0;
+    padding-left:1.2em;
+    columns:2;
+    column-gap:24px;
+  }
+  .toc li{ break-inside:avoid; margin-bottom:8px; font-size:0.95rem; }
+  @media (max-width:520px){ .toc ol{ columns:1; } }
+
+  section{
+    margin-bottom:40px;
+    scroll-margin-top:24px;
+  }
+  section h2{
+    font-family:var(--font-display);
+    font-size:1.35rem;
+    font-weight:600;
+    margin:0 0 14px;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+  section h2 .num{
+    font-family:var(--font-body);
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:7px;
+    padding:2px 8px;
+    flex-shrink:0;
+  }
+  section p{ margin:0 0 14px; max-width:65ch; }
+  section ul{ margin:0 0 14px; padding-left:1.3em; }
+  section li{ margin-bottom:8px; max-width:62ch; }
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));
+    gap:14px;
+    margin:18px 0 20px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .card h3{
+    font-size:0.95rem;
+    margin:0 0 6px;
+    font-weight:600;
+  }
+  .card p{ margin:0; font-size:0.88rem; color:var(--muted); max-width:none; }
+
+  code{
+    background:var(--code-bg);
+    border-radius:5px;
+    padding:0.1em 0.4em;
+    font-size:0.9em;
+  }
+
+  footer{
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-top:56px;
+    color:var(--muted);
+    font-size:0.88rem;
+  }
+  footer a{ color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="crumbs" style="margin:0 0 18px;font-size:14px"><a href="./">&larr; Overblip</a> &nbsp;&middot;&nbsp; <a href="../">DeKopaGames</a></p>
+  <span class="eyebrow">Terms of Service</span>
+  <h1>Overblip</h1>
+  <p class="meta">Effective date: <strong>November 4, 2026</strong> &nbsp;·&nbsp; Developer: <strong>Dekopa Games</strong> &nbsp;·&nbsp; Contact: <a href="mailto:dekopagames@gmail.com">dekopagames@gmail.com</a></p>
+
+  <nav class="toc" aria-label="Table of contents">
+    <p class="toc-title">On this page</p>
+    <ol>
+      <li><a href="#acceptance">Acceptance of these terms</a></li>
+      <li><a href="#game">The game</a></li>
+      <li><a href="#license">Your license to play</a></li>
+      <li><a href="#conduct">Fair play</a></li>
+      <li><a href="#purchases">In-app purchases</a></li>
+      <li><a href="#ads">Advertising</a></li>
+      <li><a href="#progress">Progress &amp; achievements</a></li>
+      <li><a href="#ip">Ownership</a></li>
+      <li><a href="#availability">Updates &amp; availability</a></li>
+      <li><a href="#liability">Disclaimers &amp; liability</a></li>
+      <li><a href="#law">Governing law &amp; your rights</a></li>
+      <li><a href="#contact">Changes &amp; contact</a></li>
+    </ol>
+  </nav>
+
+  <section id="acceptance">
+    <h2><span class="num">1</span>Acceptance of these terms</h2>
+    <p>These Terms of Service ("Terms") are an agreement between you and Dekopa Games ("we", "us") covering your use of Overblip, the Android game distributed through Google Play. By downloading, installing, or playing Overblip, you agree to these Terms. If you do not agree, please do not use the game.</p>
+    <p>Overblip is intended for a general audience aged 13 and up. If you are under the age of majority where you live, you should review these Terms with a parent or guardian, who must agree to them on your behalf before you make any purchase.</p>
+    <p>How we handle information is described separately in our <a href="privacy.html">Privacy Policy</a>, which forms part of these Terms.</p>
+  </section>
+
+  <section id="game">
+    <h2><span class="num">2</span>The game</h2>
+    <p>Overblip is a free-to-play arcade game about tapping targets before they vanish, played in Competitive and Survival modes. The core game can be played offline. Features that depend on online services — advertisements, in-app purchases, and Google Play Games achievements — need an internet connection and are provided by the third parties described below.</p>
+  </section>
+
+  <section id="license">
+    <h2><span class="num">3</span>Your license to play</h2>
+    <p>We grant you a personal, limited, non-exclusive, non-transferable, revocable license to install and play Overblip on devices you own or control, for your own non-commercial entertainment. You may not:</p>
+    <ul>
+      <li>copy, modify, decompile, reverse engineer, or create derivative works of the game, except where the law expressly allows it;</li>
+      <li>sell, rent, sublicense, or otherwise distribute the game or any part of it;</li>
+      <li>remove or alter any copyright, trademark, or other notices in the game.</li>
+    </ul>
+  </section>
+
+  <section id="conduct">
+    <h2><span class="num">4</span>Fair play</h2>
+    <p>Please play Overblip as it was intended. You agree not to use cheats, bots, automation tools, modified versions of the game, or any method that manipulates scores, badges, achievements, or purchases, and not to interfere with the game's advertising or billing systems. The player name you choose must not be offensive, misleading, or infringe anyone else's rights.</p>
+  </section>
+
+  <section id="purchases">
+    <h2><span class="num">5</span>In-app purchases</h2>
+    <ul>
+      <li>Overblip offers optional cosmetic frames for purchase. They change how the game looks and give no gameplay advantage.</li>
+      <li>All purchases are processed by Google Play Billing and are subject to the <a href="https://play.google.com/about/play-terms/" target="_blank" rel="noopener">Google Play Terms of Service</a> and Google Play's refund policies. We never see or store your payment details.</li>
+      <li>Frames are one-time, non-consumable purchases linked to your Google Play account. If you reinstall the game or move to a new device signed in to the same Google account, your purchased frames are restored automatically when the game connects to Google Play.</li>
+      <li>Purchased items are a license to use that content within Overblip. They have no cash value and cannot be exchanged, transferred, or redeemed for money.</li>
+      <li>Refund requests are handled through Google Play. Nothing in this section limits any refund or withdrawal rights you have under the consumer protection law of your country.</li>
+    </ul>
+  </section>
+
+  <section id="ads">
+    <h2><span class="num">6</span>Advertising</h2>
+    <p>Overblip is supported by interstitial advertisements served through Unity LevelPlay and its partner ad networks. Ads may appear before some matches when you are online. We are not responsible for the content of third-party advertisements or for any products or services they promote, and your interactions with advertisers are solely between you and them.</p>
+  </section>
+
+  <section id="progress">
+    <h2><span class="num">7</span>Progress &amp; achievements</h2>
+    <p>Your gameplay progress — player name, high scores, records, badges, and equipped items — is saved locally on your device. Uninstalling the game or clearing its data permanently deletes that local progress, and we cannot recover it. Badges you earn are also unlocked as Google Play Games achievements when you are signed in to Play Games; achievement records held by Google are governed by Google's own terms.</p>
+  </section>
+
+  <section id="ip">
+    <h2><span class="num">8</span>Ownership</h2>
+    <p>Overblip, including its code, artwork, sounds, music, names, and logos, is owned by Dekopa Games or its licensors and is protected by copyright and other intellectual property laws. Except for the limited license in section 3, no rights are granted to you.</p>
+  </section>
+
+  <section id="availability">
+    <h2><span class="num">9</span>Updates &amp; availability</h2>
+    <p>We may update Overblip from time to time to fix issues, change features, or add content. Some updates may be required to keep playing or to use online features. We aim to keep the game available but do not guarantee it will always be available, error-free, or uninterrupted, and we may discontinue it in the future. If we discontinue the game, we will give reasonable advance notice where practical.</p>
+    <p>We may suspend your access to online features if you seriously breach these Terms, for example by cheating or tampering with purchases.</p>
+  </section>
+
+  <section id="liability">
+    <h2><span class="num">10</span>Disclaimers &amp; liability</h2>
+    <p>To the extent permitted by law, Overblip is provided "as is" and "as available", without warranties of any kind beyond those that cannot be excluded by law. To the extent permitted by law, we are not liable for indirect or consequential losses, or for loss of locally stored game progress.</p>
+    <p>Nothing in these Terms excludes or limits liability that cannot be excluded or limited under applicable law, including liability for death or personal injury caused by negligence, or for fraud.</p>
+  </section>
+
+  <section id="law">
+    <h2><span class="num">11</span>Governing law &amp; your rights</h2>
+    <p>These Terms are governed by the laws of Greece. If you are a consumer, you also keep the protection of any mandatory consumer laws of the country where you live, and you may bring a claim in the courts of that country. Nothing in these Terms affects your statutory rights as a consumer.</p>
+  </section>
+
+  <section id="contact">
+    <h2><span class="num">12</span>Changes &amp; contact</h2>
+    <p>We may update these Terms as Overblip changes. The effective date at the top of this page shows the latest version. If a change significantly affects your rights, we will make it visible in the game or on our Google Play listing. Continued use of Overblip after a change means you accept the updated Terms.</p>
+    <p>Questions about these Terms can be sent to <a href="mailto:dekopagames@gmail.com">dekopagames@gmail.com</a>.</p>
+  </section>
+
+  <footer>
+    Overblip — a Dekopa Games production. This page is the Terms of Service referenced in Overblip's Google Play Store listing. See also our <a href="privacy.html">Privacy Policy</a>.
+  </footer>
+</div>
+<script>{if(!/dekopagames\.(com|github\.io)$/.test(location.hostname))for(const a of document.querySelectorAll('a[href$="/"]:not([href^="http"])'))a.setAttribute("href",a.getAttribute("href")+"index.html")}</script>
+</body>
+</html>

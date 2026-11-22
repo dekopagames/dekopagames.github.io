@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeKopaGames</title>
+<meta name="description" content="DeKopaGames is a solo indie game studio from Greece, making small, fast games for Android.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  occasion: a small game studio's front door, playful but tidy
+   IDEA   a game's title screen: the name drops in, the mascot zooms up, "press to continue"
+   PICTURE the poodle mascot on the logo's own blue field, full screen, with the giant wordmark
+   COLOUR logo blue #426dd6 dominant, white and deep ink support, warm sun yellow as the one accent
+   TYPE   Archivo 900 for the wordmark and titles, Inter for text
+   LAYOUT first screen is exactly the viewport: nav, mascot centred, intro + glowing button, wordmark across the bottom; phone keeps the same order */
+:root{color-scheme:light dark;--blue:#426dd6;--blue-deep:#2f53b8;--sun:#ffd84a;--bg:light-dark(#ffffff,#0b1330);--ink:light-dark(#0e1630,#eef2ff);--soft:light-dark(#4a5576,#aeb9d8);--card:light-dark(#ffffff,#121c42);--line:light-dark(#dbe3f7,#253266)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.band{padding:clamp(48px,7vw,96px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+
+/* ---------- hero: the title screen ---------- */
+.hero{position:relative;height:100svh;min-height:520px;background:radial-gradient(120% 80% at 50% 42%,#5a85e6 0%,var(--blue) 46%,var(--blue-deep) 100%);color:#fff;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;padding:0 max(4vw,16px) clamp(10px,2vw,22px);overflow:hidden;cursor:default}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+.brand{font:800 18px/1 Archivo,sans-serif;letter-spacing:-.01em;text-decoration:none;opacity:0;transition:opacity .4s}
+.top nav{display:flex;gap:4px;flex-wrap:wrap}
+.top nav a{font-weight:500;text-decoration:none;padding:10px 14px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
+.top nav a:hover,.top nav a:focus-visible{background:rgba(255,255,255,.16);outline:none}
+.stage{display:grid;place-items:center;position:relative}
+.mark{width:min(54vh,92vw,540px);height:auto;aspect-ratio:1;filter:drop-shadow(0 18px 24px rgba(10,25,80,.35));transform:scale(1);opacity:1}
+.mid{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:16px;padding-bottom:clamp(6px,1.4vw,14px)}
+.intro{margin:0;max-width:30ch;font-size:clamp(15px,1.5vw,18px);line-height:1.45;color:rgba(255,255,255,.9)}
+.down{grid-column:2;justify-self:center;display:inline-flex;align-items:center;gap:10px;padding:12px 20px 12px 16px;min-height:48px;border-radius:999px;background:var(--sun);color:#1b2350;font-weight:600;text-decoration:none;box-shadow:0 0 0 0 rgba(255,216,74,.7);opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+.down{position:relative;z-index:3;cursor:pointer}
+.down *{pointer-events:none}
+.down svg{width:22px;height:22px;animation:bob 1.6s ease-in-out infinite}
+.down:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.word{pointer-events:none;margin:0;font:900 100px/0.98 Archivo,sans-serif;letter-spacing:-.045em;white-space:nowrap;padding-top:.08em;user-select:none}
+.word span{display:inline-block;will-change:transform}
+.skip{position:absolute;right:max(4vw,16px);bottom:14px;font-size:13px;color:rgba(255,255,255,.75);background:none;border:0;padding:8px;cursor:pointer;opacity:0;pointer-events:none}
+
+/* intro timeline - only when JS adds .play */
+.hero.play .word span{transform:translateY(-120vh) rotate(var(--r));animation:drop .72s cubic-bezier(.22,1.25,.4,1) forwards;animation-delay:calc(var(--i)*65ms + .15s)}
+.hero.play .mark{opacity:0;transform:scale(.04);filter:blur(6px);animation:zoom 1s cubic-bezier(.16,1,.3,1) 1.15s forwards}
+.hero.play .skip{opacity:1;pointer-events:auto}
+.hero.ready .down{opacity:1;transform:none;animation:glow 2.2s ease-in-out infinite}
+.hero.ready .brand{opacity:1}
+.hero.ready .skip{opacity:0;pointer-events:none}
+@keyframes drop{to{transform:translateY(0) rotate(0)}}
+@keyframes zoom{60%{filter:blur(0)}to{opacity:1;transform:scale(1);filter:drop-shadow(0 18px 24px rgba(10,25,80,.35))}}
+@keyframes glow{50%{box-shadow:0 0 0 12px rgba(255,216,74,0),0 0 34px 6px rgba(255,216,74,.55)}}
+@keyframes bob{50%{transform:translateY(3px)}}
+
+/* ---------- projects ---------- */
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 32px;margin-bottom:clamp(24px,3vw,40px)}
+h2{font:900 clamp(34px,5vw,52px)/1.05 Archivo,sans-serif;letter-spacing:-.025em;margin:0;text-wrap:balance}
+.sec-head p{margin:0;max-width:52ch;color:var(--soft)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.card .art{aspect-ratio:4/3;display:grid;place-items:center;position:relative}
+.card .art svg{width:100%;height:100%}
+.card .art{overflow:hidden}
+.card .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card h3 a{text-decoration:none}
+.card h3 a:hover,.card h3 a:focus-visible{text-decoration:underline}
+.card .body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font:800 24px/1.1 Archivo,sans-serif;letter-spacing:-.01em;margin:0}
+.card p{margin:0;color:var(--soft)}
+.tag{align-self:flex-start;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:color-mix(in srgb,var(--blue) 14%,transparent);color:light-dark(var(--blue-deep),#9fb8ff)}
+.tag.live{background:color-mix(in srgb,var(--sun) 40%,transparent);color:light-dark(#6a4d00,var(--sun))}
+.btn{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid var(--blue);color:light-dark(var(--blue-deep),#c9d6ff)}
+.btn:hover,.btn:focus-visible{background:var(--blue);color:#fff;outline:none}
+.btn[aria-disabled=true]{opacity:.55;pointer-events:none;border-style:dashed}
+.note{margin:20px 0 0;font-size:13px;color:var(--soft)}
+
+/* ---------- about teaser ---------- */
+.about{background:#000;color:#fff}
+.about .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(24px,5vw,72px);align-items:center}
+.about img{width:100%;max-width:440px;justify-self:center;aspect-ratio:900/981;object-fit:cover;-webkit-mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent),linear-gradient(to bottom,#000 72%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 14%,#000 86%,transparent),linear-gradient(to bottom,#000 72%,transparent);mask-composite:intersect;}
+.about p{color:#c9cfe0;max-width:52ch}
+.about .motto{font:800 clamp(20px,2.2vw,26px)/1.25 Archivo,sans-serif;color:var(--sun);margin:14px 0 6px}
+.about .btn{border-color:#fff;color:#fff}
+.about .btn:hover,.about .btn:focus-visible{background:#fff;color:#000}
+
+/* ---------- footer ---------- */
+footer{background:var(--blue);color:#fff}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));gap:32px}
+footer h2{font-size:clamp(30px,4vw,44px)}
+footer h4{margin:0 0 10px;font:800 16px/1.2 Archivo,sans-serif}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+footer a{text-decoration:none;display:inline-block;padding:6px 0}
+footer a:hover,footer a:focus-visible{text-decoration:underline}
+.mail{font-weight:600;font-size:18px;overflow-wrap:anywhere}
+.legal{max-width:1240px;margin:40px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.3);text-align:center;font-size:13px;color:rgba(255,255,255,.85)}
+
+@media(max-width:900px){.grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.grid .card:last-child{grid-column:1/-1}.grid .card:last-child .art{aspect-ratio:16/6}}
+@media(max-width:600px){
+ .brand{display:none}
+ .top{justify-content:flex-end}
+ .top nav a{padding:10px 12px;font-size:15px}
+ .mid{grid-template-columns:minmax(0,1fr);justify-items:start;gap:14px}
+ .down{grid-column:1;justify-self:center}
+ .intro{max-width:none}
+ .grid{grid-template-columns:minmax(0,1fr)}.grid .card:last-child .art{aspect-ratio:4/3}
+ .about .wrap,footer .wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero.play .word span,.hero.play .mark{animation:none;transform:none;opacity:1;filter:none}.down svg,.hero.ready .down{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="top">
+    <a class="brand" href="#top">DeKopaGames</a>
+    <nav aria-label="Main">
+      <a href="#projects">Projects</a>
+      <a href="about.html">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <div class="stage">
+    <img class="mark" src="assets/logo-cut.png" alt="DeKopaGames poodle logo" width="640" height="640">
+  </div>
+
+  <div class="mid">
+    <p class="intro">A one-person game studio from Greece, making small, fast games you can pick up in a second.</p>
+    <a class="down" href="#projects">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      See the games
+    </a>
+  </div>
+
+  <h1 class="word" id="word" aria-label="DeKopaGames">DeKopaGames</h1>
+  <button class="skip" id="skip" type="button">Skip intro</button>
+</header>
+
+<main>
+  <section class="band" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Games</h2>
+        <p>Small games, finished properly. Here's what's out, what's almost out, and what's on the desk.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <a class="art" href="overblip/" style="background:#000"><img src="assets/overblip-banner.jpg" alt="Overblip: tap fast, hit precise, score high" width="1024" height="500" loading="lazy" style="object-position:left center"></a>
+          <div class="body">
+            <span class="tag live">Closed testing · Android</span>
+            <h3><a href="overblip/">Overblip</a></h3>
+            <p>Tap targets dead-centre before they vanish. They start still, then move, then shrink. Hit two at once where they overlap for a double score, and stay away from the skull.</p>
+            <a class="btn" href="overblip/">Discover Overblip</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="art" href="allgregcaneat/" style="background:#b3121f"><img src="assets/greg-cover.jpg" alt="All Greg Can Eat cover art" width="630" height="500" loading="lazy"></a>
+          <div class="body">
+            <span class="tag">Unity Jam 2026 · itch.io</span>
+            <h3><a href="allgregcaneat/">All Greg Can Eat</a></h3>
+            <p>My first released game, made in 7 days for Unity Jam 2026. Greg shows up two minutes before closing time and tries to eat everything. Find the lucky numbers, dodge the staff.</p>
+            <a class="btn" href="allgregcaneat/">Discover the game</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="art" style="background:light-dark(#eaf0ff,#17224f)">
+            <svg viewBox="0 0 400 300" role="img" aria-label="Next project, still a sketch">
+              <g style="fill:none;stroke:var(--blue)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 10">
+                <rect x="96" y="70" width="208" height="160" rx="18"/>
+                <path d="M140 190l46-58 36 40 26-28 36 46"/>
+              </g>
+              <circle cx="262" cy="110" r="16" style="fill:var(--sun)"/>
+            </svg>
+          </div>
+          <div class="body">
+            <span class="tag">In the sketchbook</span>
+            <h3>Next project</h3>
+            <p>Something new is taking shape. Join the Discord to follow along and see it first.</p>
+            <a class="btn" href="https://discord.gg/VGk23Ukv9k">Join the Discord</a>
+          </div>
+        </article>
+      </div>
+          </div>
+  </section>
+
+  <section class="band about" id="about">
+    <div class="wrap">
+      <img src="assets/me.jpg" alt="Portrait of the developer behind DeKopaGames" width="900" height="981" loading="lazy">
+      <div>
+        <h2>Hi, I'm the person behind DeKopaGames.</h2>
+        <p class="motto">Player by nature. Creator by choice.</p>
+        <p>I didn't just want to play games. I wanted to create them, and maybe give someone else a moment they'll remember.</p>
+        <a class="btn" href="about.html">More about me</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="band" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let's talk games.</h2>
+      <p>Feedback, testing, collaborations or just a hello:</p>
+      <a class="mail" href="mailto:dekopagames@gmail.com">dekopagames@gmail.com</a>
+    </div>
+    <div>
+      <h4>Find me</h4>
+      <ul>
+        <li><a href="https://dekopagames.itch.io">itch.io</a></li>
+        <li><a href="https://www.youtube.com/@dekopagames">YouTube</a></li>
+        <li><a href="https://discord.gg/VGk23Ukv9k">Discord</a></li>
+        <li><a href="overblip/">Overblip</a></li>
+        <li><a href="allgregcaneat/">All Greg Can Eat</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Overblip</h4>
+      <ul>
+        <li><a href="overblip/privacy.html">Privacy policy</a></li>
+        <li><a href="overblip/terms.html">Terms of service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal">Made by DeKopaGames © <span id="yr">2026</span></div>
+</footer>
+
+<script>
+{
+  const hero = document.querySelector('.hero');
+  const word = document.getElementById('word');
+  const skipBtn = document.getElementById('skip');
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Split the wordmark into letters, each with its own fall delay and tilt.
+  const text = word.textContent.trim();
+  word.innerHTML = [...text].map((ch, i) =>
+    `<span aria-hidden="true" style="--i:${i};--r:${((i * 37) % 21) - 10}deg">${ch}</span>`).join('');
+
+  // Size the wordmark so it runs exactly from the left edge to the right edge.
+  const letters = [...word.children];
+  const fit = () => {
+    word.style.fontSize = '100px';
+    // offsetWidth ignores the falling transforms, so this measures the resting width.
+    const w = letters.reduce((sum, el) => sum + el.offsetWidth, 0);
+    const room = word.clientWidth;
+    if (w > 0 && room > 0) word.style.fontSize = (100 * room / w) + 'px';
+  };
+  const ro = new ResizeObserver(fit);
+  ro.observe(hero);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  fit();
+
+  // Title-screen timeline: letters drop, logo zooms in, then the glowing button.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seen = false;
+  try { seen = sessionStorage.getItem('dg-intro') === '1'; } catch (e) {}
+
+  let timer = null;
+  const finish = () => {
+    clearTimeout(timer);
+    hero.classList.remove('play');
+    hero.classList.add('ready');
+    try { sessionStorage.setItem('dg-intro', '1'); } catch (e) {}
+    removeEventListener('wheel', finish);
+    removeEventListener('keydown', finish);
+    hero.removeEventListener('pointerdown', finish);
+  };
+
+  // The whole yellow button scrolls to the games, wherever it's tapped.
+  const down = document.querySelector('.down');
+  const games = document.getElementById('projects');
+  down.addEventListener('click', e => {
+    e.preventDefault();
+    finish();
+    games.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  if (reduce || seen) {
+    finish();
+  } else {
+    hero.classList.add('play');
+    timer = setTimeout(finish, 2400);
+    // Any tap, scroll or key skips straight to the finished title screen.
+    addEventListener('wheel', finish, { passive: true });
+    addEventListener('keydown', finish);
+    hero.addEventListener('pointerdown', finish);
+    skipBtn.addEventListener('click', finish);
+  }
+}
+</script>
+<script>{if(!/dekopagames\.(com|github\.io)$/.test(location.hostname))for(const a of document.querySelectorAll('a[href$="/"]:not([href^="http"])'))a.setAttribute("href",a.getAttribute("href")+"index.html")}</script>
+</body>
+</html>

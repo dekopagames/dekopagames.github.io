@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overblip</title>
+<meta name="description" content="Overblip is a fast tap target game for Android: hit targets dead-centre before they vanish, chain streaks and unlock 41 achievements.">
+<link rel="icon" href="../assets/overblip-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,700;1,800;1,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  occasion: an arcade cabinet's side art, loud but legible
+   IDEA   the game's own HUD: neon-green frame, radar targets, orange score digits
+   PICTURE the store banner full-width, then the real screenshots inside phone frames
+   COLOUR black ground, neon green #7dff3a lead, score orange #ffb020, red #ff3b3b and blue #2f7bff only for the target types
+   TYPE   Exo 2 heavy italic like the logo lettering, Inter for text
+   LAYOUT laptop: logo + pitch left, phone screenshot right; then sections in bands; phone: logo, pitch, screenshot, sections */
+:root{color-scheme:dark;--bg:#000;--panel:#0b120a;--line:#1f3a17;--neon:#7dff3a;--neon-d:#3fae12;--orange:#ffb020;--red:#ff3b3b;--blue:#2f7bff;--ink:#eef6ea;--soft:#a9b8a3}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--neon)}
+.band{padding:clamp(40px,6vw,88px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3{font-family:"Exo 2",Inter,sans-serif;font-style:italic;font-weight:900;letter-spacing:-.01em;line-height:1.05;margin:0}
+h2{font-size:clamp(32px,4.6vw,50px);margin-bottom:clamp(20px,3vw,36px);text-wrap:balance}
+h3{font-size:22px;font-weight:800}
+p{margin:0}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px max(5vw,16px);border-bottom:1px solid var(--line)}
+.top a{text-decoration:none;color:var(--ink);font-weight:500;min-height:44px;display:inline-flex;align-items:center;gap:8px}
+.top a:hover,.top a:focus-visible{color:var(--neon);outline:none}
+.top img{width:28px;height:28px;border-radius:7px}
+
+.hero{background:radial-gradient(70% 90% at 30% 40%,rgba(125,255,58,.16),transparent 60%),var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,72px);align-items:center}
+.logo{width:min(100%,420px);margin:-20px 0 4px -20px;mix-blend-mode:screen}
+.claim{font:italic 900 clamp(30px,4.4vw,52px)/1.05 "Exo 2",sans-serif;margin:0 0 18px}
+.claim span{color:var(--neon);text-shadow:0 0 18px rgba(125,255,58,.45)}
+.lead{font-size:18px;color:var(--soft);max-width:46ch}
+.status{display:inline-flex;align-items:center;gap:10px;margin:22px 0 0;padding:8px 14px;border:1px solid var(--neon-d);border-radius:999px;font-size:14px;font-weight:600;color:var(--neon)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 10px var(--neon);animation:blink 1.4s infinite}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:12px 22px;border-radius:12px;font-weight:600;text-decoration:none;border:2px solid var(--neon);color:var(--neon)}
+.btn.solid{background:var(--neon);color:#062000}
+.btn[aria-disabled=true]{opacity:.6;pointer-events:none;border-style:dashed;background:none;color:var(--neon)}
+.btn:hover,.btn:focus-visible{box-shadow:0 0 0 4px rgba(125,255,58,.25);outline:none}
+.phone{justify-self:center;width:min(100%,300px);border-radius:28px;padding:8px;background:linear-gradient(160deg,#1c2b16,#050805);box-shadow:0 0 0 1px var(--line),0 24px 60px rgba(0,0,0,.6),0 0 60px rgba(125,255,58,.12)}
+.phone img{width:100%;border-radius:22px;aspect-ratio:1080/2400;object-fit:cover}
+
+.banner{border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:ph}
+.phase{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.phase svg{width:100%;height:110px;margin-bottom:12px}
+.phase p{color:var(--soft);margin-top:6px}
+
+.bonus{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.bonus div{border-left:3px solid var(--neon);padding:4px 0 4px 14px}
+.bonus b{display:block;font-family:"Exo 2",sans-serif;font-style:italic;font-size:19px}
+.bonus span{color:var(--soft);font-size:15px}
+
+.targets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tcard{display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.tcard svg{width:72px;height:72px}
+.tcard p{color:var(--soft);font-size:15px}
+
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.mode{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(180deg,var(--panel),transparent)}
+.mode p{color:var(--soft);margin-top:8px}
+.mode ul{margin:12px 0 0;padding-left:18px;color:var(--soft)}
+
+.shots{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:center}
+.shots .phone{width:100%;max-width:280px}
+.extras{display:grid;gap:18px}
+.extras div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.extras p{color:var(--soft);margin-top:6px}
+.num{color:var(--orange);font-family:"Exo 2",sans-serif;font-style:italic;font-weight:900}
+
+footer{border-top:1px solid var(--line);padding:28px max(5vw,16px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;color:var(--soft)}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}
+footer a{color:var(--ink);text-decoration:none;padding:6px 0}
+footer a:hover{color:var(--neon)}
+@keyframes blink{50%{opacity:.3}}
+@media(max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.phases,.targets{grid-template-columns:minmax(0,1fr)}.shots{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.extras{grid-column:1/-1}}
+@media(max-width:600px){.modes{grid-template-columns:minmax(0,1fr)}.phase svg{height:90px}.logo{margin-left:-12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.status i{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../"><img src="../assets/logo.png" alt="" width="28" height="28">DeKopaGames</a>
+  <a href="#play">How it plays</a>
+</header>
+
+<section class="band hero">
+  <div class="wrap">
+    <div>
+      <img class="logo" src="../assets/overblip-logo.png" alt="Overblip" width="512" height="512">
+      <p class="claim">Tap fast. <span>Hit precise.</span> Score high.</p>
+      <p class="lead">A fast tap target game for Android. Targets keep appearing, and you hit them as close to the centre as you can, as quickly as you can. Simple to start, hard to master.</p>
+      <span class="status"><i></i>In closed testing · coming soon to Google Play</span>
+      <div class="cta">
+        <a class="btn solid" href="#" aria-disabled="true">Get it on Google Play</a>
+        <a class="btn" href="#play">See how it plays</a>
+      </div>
+    </div>
+    <div class="phone"><img src="../assets/overblip-shot1.jpg" alt="Overblip gameplay: green radar targets, a red skull target and a blue special target inside a neon frame" width="540" height="1200"></div>
+  </div>
+</section>
+
+<section class="band" style="padding-top:0">
+  <div class="wrap banner"><img src="../assets/overblip-banner.jpg" alt="Overblip: tap fast, hit precise, score high" width="1024" height="500" loading="lazy"></div>
+</section>
+
+<section class="band" id="play">
+  <div class="wrap">
+    <h2>Three rounds, three ways to sweat</h2>
+    <div class="phases">
+      <div class="phase">
+        <svg viewBox="0 0 300 110" aria-hidden="true"><g fill="none" stroke="#7dff3a" stroke-width="2"><circle cx="70" cy="55" r="34"/><circle cx="70" cy="55" r="20"/><circle cx="160" cy="48" r="30"/><circle cx="160" cy="48" r="17"/><circle cx="240" cy="62" r="32"/><circle cx="240" cy="62" r="18"/></g></svg>
+        <h3>Round 1 · Still</h3>
+        <p>Targets appear and stay put. Pure accuracy: nail the bullseye before they fade.</p>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 300 110" aria-hidden="true"><g fill="none" stroke="#7dff3a" stroke-width="2"><circle cx="110" cy="55" r="32"/><circle cx="110" cy="55" r="18"/><circle cx="210" cy="50" r="28"/><circle cx="210" cy="50" r="15"/></g><g stroke="#7dff3a" stroke-width="2" stroke-linecap="round" opacity=".5"><path d="M30 55h40M40 42h24M44 68h22"/><path d="M150 50h20M158 38h12"/></g></svg>
+        <h3>Round 2 · Moving</h3>
+        <p>Targets drift and bounce off the frame. Faster targets are worth more.</p>
+      </div>
+      <div class="phase">
+        <svg viewBox="0 0 300 110" aria-hidden="true"><g fill="none" stroke="#7dff3a" stroke-width="2"><circle cx="70" cy="55" r="36"/><circle cx="150" cy="55" r="26"/><circle cx="215" cy="55" r="17"/><circle cx="262" cy="55" r="10"/></g><path d="M40 98h220" stroke="#ffb020" stroke-width="2" stroke-dasharray="4 6"/></svg>
+        <h3>Round 3 · Moving + shrinking</h3>
+        <p>Now they shrink too. Wait for a smaller target and the bonus grows, but the clock is ticking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="background:var(--panel)">
+  <div class="wrap">
+    <h2>Every tap stacks bonuses</h2>
+    <div class="bonus">
+      <div><b>Accuracy</b><span>Dead centre scores 100. The further out, the less you get.</span></div>
+      <div><b>Speed</b><span>Hit a target right after it appears for up to double points.</span></div>
+      <div><b>Distance</b><span>Swing far across the screen between hits for up to ×3.</span></div>
+      <div><b>Movement &amp; shrink</b><span>Faster and smaller targets multiply your score.</span></div>
+      <div><b>Overlaps</b><span>Tap where targets overlap to score them all, multiplied by how many you hit.</span></div>
+      <div><b>Streak &amp; perfection</b><span>Keep hitting to grow your combo, and land 90%+ hits for a bonus that never resets.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Know your targets</h2>
+    <div class="targets">
+      <div class="tcard">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><g fill="none" stroke="#7dff3a" stroke-width="2"><circle cx="36" cy="36" r="33" fill="rgba(125,255,58,.12)"/><circle cx="36" cy="36" r="22"/><circle cx="36" cy="36" r="11"/><path d="M36 2v68M2 36h68"/></g></svg>
+        <div><h3>Target</h3><p>Lives for 5 seconds. Let one vanish and it can cost you.</p></div>
+      </div>
+      <div class="tcard">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="33" fill="#2f7bff"/><circle cx="36" cy="36" r="25" fill="#fff"/><circle cx="36" cy="36" r="17" fill="#2f7bff"/><circle cx="36" cy="36" r="9" fill="#fff"/><circle cx="36" cy="36" r="4" fill="#ffd400"/></svg>
+        <div><h3>Special target</h3><p>Shows up every 15 seconds. The longer you wait, up to 10 seconds, the bigger the bonus.</p></div>
+      </div>
+      <div class="tcard">
+        <svg viewBox="0 0 72 72" aria-hidden="true"><g fill="none" stroke="#ff3b3b" stroke-width="2"><circle cx="36" cy="36" r="33"/><circle cx="36" cy="36" r="22"/><path d="M36 2v68M2 36h68"/></g><circle cx="36" cy="34" r="7" fill="#ff3b3b"/><rect x="32" y="39" width="8" height="5" rx="1" fill="#ff3b3b"/></svg>
+        <div><h3>Skull</h3><p>Always on the move. Hit it and your points go negative. Don't.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" style="background:var(--panel)">
+  <div class="wrap">
+    <h2>Two modes</h2>
+    <div class="modes">
+      <div class="mode">
+        <h3>Competitive</h3>
+        <p>Three rounds with short breaks between them, always exactly <span class="num">3:00</span>. Every run is directly comparable, so it's all about your best score.</p>
+      </div>
+      <div class="mode">
+        <h3>Survival</h3>
+        <p>No breaks and the board carries over. After <span class="num">3:00</span> the game keeps going until <span class="num">10</span> targets have slipped away. How long can you last?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap shots">
+    <div class="phone"><img src="../assets/overblip-shot1.jpg" alt="A late-game screen with over a million points and a ×5.60 perfection bonus" width="540" height="1200" loading="lazy"></div>
+    <div class="phone"><img src="../assets/overblip-shot2.jpg" alt="Overlapping targets glowing yellow where they intersect, next to a score popup" width="540" height="1200" loading="lazy"></div>
+    <div class="extras">
+      <h2 style="margin:0">More to chase</h2>
+      <div><h3>41 achievements</h3><p>Badges for targets destroyed, streaks, overlaps, perfect hits and more, all synced with Google Play Games.</p></div>
+      <div><h3>Your stats</h3><p>Every match tracks precision, reaction speed, best streak and your biggest single tap.</p></div>
+      <div><h3>Frames</h3><p>Reskin your game screen with new frames, and preview any of them before you decide.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Overblip · a DeKopaGames game</span>
+  <nav>
+    <a href="privacy.html">Privacy policy</a>
+    <a href="terms.html">Terms of service</a>
+    <a href="https://discord.gg/VGk23Ukv9k">Discord</a>
+    <a href="mailto:dekopagames@gmail.com">dekopagames@gmail.com</a>
+    <a href="../">DeKopaGames</a>
+  </nav>
+</footer>
+<script>{if(!/dekopagames\.(com|github\.io)$/.test(location.hostname))for(const a of document.querySelectorAll('a[href$="/"]:not([href^="http"])'))a.setAttribute("href",a.getAttribute("href")+"index.html")}</script>
+</body>
+</html>
