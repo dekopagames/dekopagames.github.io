@@ -3,9 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DeKopaGames</title>
+<title>DeKopaGames | Indie games from Greece</title>
 <meta name="description" content="DeKopaGames is a solo indie game studio from Greece, making small, fast games for Android.">
 <link rel="icon" href="assets/logo.png">
+<link rel="canonical" href="https://dekopagames.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DeKopaGames">
+<meta property="og:title" content="DeKopaGames | Indie games from Greece">
+<meta property="og:description" content="DeKopaGames is a solo indie game studio from Greece, making small, fast games for Android.">
+<meta property="og:url" content="https://dekopagames.com/">
+<meta property="og:image" content="https://dekopagames.com/assets/og-dekopagames.jpg">
+<meta property="og:image:alt" content="DeKopaGames poodle logo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DeKopaGames | Indie games from Greece">
+<meta name="twitter:description" content="DeKopaGames is a solo indie game studio from Greece, making small, fast games for Android.">
+<meta name="twitter:image" content="https://dekopagames.com/assets/og-dekopagames.jpg">
+<meta name="theme-color" content="#3E6FD8">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "DeKopaGames", "url": "https://dekopagames.com/", "logo": "https://dekopagames.com/assets/logo.png", "description": "Solo indie game studio from Greece, making small, fast games for Android.", "founder": {"@type": "Person", "name": "Dennis"}, "sameAs": ["https://dekopagames.itch.io", "https://www.youtube.com/@dekopagames"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "DeKopaGames", "url": "https://dekopagames.com/"}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -45,15 +61,12 @@ a{color:inherit}
 .down:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .word{pointer-events:none;margin:0;font:900 100px/0.98 Archivo,sans-serif;letter-spacing:-.045em;white-space:nowrap;padding-top:.08em;user-select:none}
 .word span{display:inline-block;will-change:transform}
-.skip{position:absolute;right:max(4vw,16px);bottom:14px;font-size:13px;color:rgba(255,255,255,.75);background:none;border:0;padding:8px;cursor:pointer;opacity:0;pointer-events:none}
 
 /* intro timeline - only when JS adds .play */
 .hero.play .word span{transform:translateY(-120vh) rotate(var(--r));animation:drop .72s cubic-bezier(.22,1.25,.4,1) forwards;animation-delay:calc(var(--i)*65ms + .15s)}
 .hero.play .mark{opacity:0;transform:scale(.04);filter:blur(6px);animation:zoom 1s cubic-bezier(.16,1,.3,1) 1.15s forwards}
-.hero.play .skip{opacity:1;pointer-events:auto}
 .hero.ready .down{opacity:1;transform:none;animation:glow 2.2s ease-in-out infinite}
 .hero.ready .brand{opacity:1}
-.hero.ready .skip{opacity:0;pointer-events:none}
 @keyframes drop{to{transform:translateY(0) rotate(0)}}
 @keyframes zoom{60%{filter:blur(0)}to{opacity:1;transform:scale(1);filter:drop-shadow(0 18px 24px rgba(10,25,80,.35))}}
 @keyframes glow{50%{box-shadow:0 0 0 12px rgba(255,216,74,0),0 0 34px 6px rgba(255,216,74,.55)}}
@@ -140,7 +153,6 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
   </div>
 
   <h1 class="word" id="word" aria-label="DeKopaGames">DeKopaGames</h1>
-  <button class="skip" id="skip" type="button">Skip intro</button>
 </header>
 
 <main>
@@ -197,7 +209,7 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
     <div class="wrap">
       <img src="assets/me.jpg" alt="Portrait of the developer behind DeKopaGames" width="900" height="981" loading="lazy">
       <div>
-        <h2>Hi, I'm the person behind DeKopaGames.</h2>
+        <h2>Hi, I'm Dennis, the person behind DeKopaGames.</h2>
         <p class="motto">Player by nature. Creator by choice.</p>
         <p>I didn't just want to play games. I wanted to create them, and maybe give someone else a moment they'll remember.</p>
         <a class="btn" href="about.html">More about me</a>
@@ -238,7 +250,6 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
 {
   const hero = document.querySelector('.hero');
   const word = document.getElementById('word');
-  const skipBtn = document.getElementById('skip');
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   // Split the wordmark into letters, each with its own fall delay and tilt.
@@ -294,7 +305,6 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
     addEventListener('wheel', finish, { passive: true });
     addEventListener('keydown', finish);
     hero.addEventListener('pointerdown', finish);
-    skipBtn.addEventListener('click', finish);
   }
 }
 </script>
